@@ -25,7 +25,7 @@ public class CallStackParser {
      
      - Returns: a tuple containing the (class,method) or nil if it could not be parsed
      */
-    public static func classAndMethod(forStackSymbol stackSymbol: String, includeImmediateParentClass: Bool? = false) -> (String, String)? {
+    public static func classAndMethod(forStackSymbol stackSymbol: String, includeImmediateParentClass: Bool? = false) -> (klass: String, method: String)? {
         let replaced = stackSymbol.replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression, range: nil)
         let components = replaced.split(separator: " ")
         if (components.count >= 4) {
@@ -63,7 +63,7 @@ public class CallStackParser {
      
      - Returns: a tuple containing the (class,method) or nil if it could not be parsed
      */
-    public static func callingClassAndMethodInScope(includeImmediateParentClass: Bool? = false) -> (String, String)? {
+    public static func callingClassAndMethodInScope(includeImmediateParentClass: Bool? = false) -> (klass: String, method: String)? {
         let stackSymbols = Thread.callStackSymbols
         if (stackSymbols.count >= 3) {
             return classAndMethod(forStackSymbol: stackSymbols[2], includeImmediateParentClass: includeImmediateParentClass)
@@ -78,7 +78,7 @@ public class CallStackParser {
      
      - Returns: a tuple containing the (class,method) or nil if it could not be parsed
      */
-    public static func thisClassAndMethodInScope(includeImmediateParentClass: Bool? = false) -> (String, String)? {
+    public static func thisClassAndMethodInScope(includeImmediateParentClass: Bool? = false) -> (klass: String, method: String)? {
         let stackSymbols = Thread.callStackSymbols
         if (stackSymbols.count >= 2) {
             return classAndMethod(forStackSymbol: stackSymbols[1], includeImmediateParentClass: includeImmediateParentClass)
